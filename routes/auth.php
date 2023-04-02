@@ -20,7 +20,10 @@ Route::middleware('guest')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    // Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+    // Добавить маршрут для аутентификации пользователя через телефон
+    Route::post('/login', [AuthenticatedSessionController::class, 'phoneLogin'])->name('login.phone');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');

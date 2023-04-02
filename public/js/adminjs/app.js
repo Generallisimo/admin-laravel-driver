@@ -1,36 +1,27 @@
-const deleteButton = document.getElementById('delete-user');
-const username = document.getElementById('username');
+const nameFilter = document.getElementById('name-filter');
+const phoneFilter = document.getElementById('phone-filter');
+const dateFilter = document.getElementById('date-filter');
 
-function createLink(name) {
-    var link = document.createElement("a");
-    link.href = "#";
-    link.className = "nav-link";
-    var icon = document.createElement("i");
-    icon.className = "fas fa-user";
-    var paragraph = document.createElement("p");
-    paragraph.id = "username";
-    paragraph.textContent = name;
-    // var btn = document.createElement("button");
-    // btn.id = "delete-user";
-    link.appendChild(icon);
-    link.appendChild(paragraph);
-    // link.appendChild(btn);
-    return link;
-}
-function addLink() {
-        var name = prompt("Введите имя:");
-        var link = createLink(name);
-        var container = document.getElementById("links-container");
-        container.appendChild(link);
-    }
+nameFilter.addEventListener('input', filterTable);
+phoneFilter.addEventListener('input', filterTable);
+dateFilter.addEventListener('input', filterTable);
 
-    deleteButton.addEventListener('click', () => {
-    const nameToDelete = prompt("Введите имя для удаления:");
-    const links = document.querySelectorAll('.nav-link');
-    links.forEach(link => {
-        const username = link.querySelector('#username');
-        if (username && username.textContent === nameToDelete) {
-            link.remove();
+function filterTable() {
+    const nameValue = nameFilter.value.toLowerCase();
+    const phoneValue = phoneFilter.value.toLowerCase();
+    const dateValue = dateFilter.value.toLowerCase();
+    
+    const tableRows = document.querySelectorAll('#example2_wrapper tbody tr');
+    
+    tableRows.forEach(row => {
+        const name = row.querySelector('#name-filter').textContent.toLowerCase();
+        const phone = row.querySelector('#phone-filter').textContent.toLowerCase();
+        const date = row.querySelector('#date-filter').textContent.toLowerCase();
+        
+        if (name.includes(nameValue) && phone.includes(phoneValue) && date.includes(dateValue)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
         }
     });
-});
+}

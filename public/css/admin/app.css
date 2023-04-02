@@ -1,0 +1,25 @@
+
+.cont-grid{
+    display: flex;
+    justify-content: space-around;
+}
+.grid-btn{
+    /* display: grid; */
+    margin-right: 50px;
+    background-color: rgb(217, 210, 210);
+    align-self: center;
+    padding: 15px 15px 0 15px;
+    border-radius: 10px;
+}
+.btn-div{
+    background-color: rgb(217, 210, 210);
+}
+.tabel-css {
+    
+    border-radius: 10px;
+}
+
+.btn-for-driver{
+    width: 15px;
+    height: 20px;
+}

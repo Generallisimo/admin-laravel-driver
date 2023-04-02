@@ -1,5 +1,5 @@
 @extends('admin.layouts')
-@section('title', 'panel')
+@section('title', 'adddriver')
 @section('content')
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -13,6 +13,7 @@
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
+        <p class="h3">Add new driver</p>    
     </ul>
 
     <!-- Right navbar links -->
@@ -53,10 +54,6 @@
               <p class="ml-2">Drivers</p>
             </a>
             
-            <!-- <button onclick="addLink()">Добавить</button>
-            <button id="delete-user">Удалить</button>
-            <div id="links-container"></div> -->
-
           </li>
         </ul>
       </nav>
@@ -80,35 +77,47 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-dark">
-              <div class="inner">
-                <h3>{{$count}}</h3>
-                <p>New Driver</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="{{ url('/admin/drivers') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
+
+
+
+    <div class="card card-dark modal-dialog">
+<div class="card-header">
+<h3 class="card-title">Card driver</h3>
+</div>
+<form action="{{ route('addUser') }}" method="post">
+    @csrf
+    <div class="card-body">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="name" name="name" class="form-control" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <label >Phone</label>
+            <!-- <input type="text" name="phone" class="form-control" pattern="\+7\(\d{3}\)-\d{3}-\d{2}-\d{2}" placeholder="Phone"> -->
+            <input class="form-control" type="text" name="phone"  maxlength="18" required>
 
         </div>
-        <!-- /.row -->
+        <!-- <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" class="form-control" placeholder="Password">
+        </div> -->
+        <!-- <div class="form-group">
+            <label >Data</label>
+            <input type="text" name="data" class="form-control"  placeholder="Data">
+        </div> -->
+    </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-dark">Add User</button>
+    </div>
+</div>
+</form>
+</div>
 
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer"></footer>
-  <!-- Control Sidebar -->
+    
+</div>
+<!-- /.content-wrapper -->
+<footer class="main-footer"></footer>
+<!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
   <!-- Control sidebar content goes here -->
 </aside>
