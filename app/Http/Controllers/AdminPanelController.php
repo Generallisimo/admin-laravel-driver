@@ -28,11 +28,32 @@ class AdminPanelController extends Controller
         // получение имени текущего аутентифицированного пользователя
         $name = Auth::user()->name;
         // выводим из бд 
-        $users = DB::table('users')->get();
+        // $users = DB::table('users')->get();
+        $users = User::paginate(10);
         // выводим все var
         return view('admin/admin_drivers', ['name' => $name,'users' => $users]);
     }
+    public function searchUsers(Request $request)
+    {
+        $name = Auth::user()->name;
+        // выводим из бд 
+        // $users = DB::table('users')->get();
+        // $users = User::paginate(10);
     
+        $name = $request->input('name');
+        $phone = $request->input('phone');
+        
+        $users = User::query()
+            ->when($name, function ($query, $name) {
+                return $query->where('name', 'like', '%'.$name.'%');
+            })
+            ->when($phone, function ($query, $phone) {
+                return $query->where('phone', 'like', '%'.$phone.'%');
+            })
+            ->paginate(10);
+    
+        return view('/admin/admin_drivers', ['name' => $name,'users' => $users] );
+    }
     public function addNewUser(){
         $name = Auth::user()->name;
         return view('admin/admin_add', ['name' => $name]);
@@ -41,14 +62,6 @@ class AdminPanelController extends Controller
     public function addUser(Request $request)
     {
         $data = date('d.m.Y');
-        // DB::table('users')->insert([
-        //     'name' => $request->name,
-        //     'phone' => $request->phone,
-        //     'password' =>$request->password_no,
-        //     'password_no'=>$request->password,
-        //     'data' => $data,
-        // ]);
-        // return redirect()->back();
         // Создаем нового пользователя
         $newUser = new User();
         $newUser->name = $request->name;
@@ -63,7 +76,7 @@ class AdminPanelController extends Controller
         $userRole = Role::where('name', 'user')->first();
         $newUser->roles()->attach($userRole);
         // Редирект на страницу со списком пользователей
-        return redirect('/drivers');
+        return redirect('/admin/drivers');
     }
 
     public function deleteUser($id)
@@ -113,15 +126,15 @@ class AdminPanelController extends Controller
 
         return redirect()->back();
     }
+    // для карточки водителя
     public function show($id)
     {
 
         $driver = User::find($id);
     $files = $driver->driverFiles()->orderBy('created_at', 'desc')->get();
         return view('admin/admindriver', compact('driver', 'files'));
-        // $driver = User::find($id);
-        // return view('admin/admindriver', compact('driver'));
     }
+    // для добавления файлов
     public function showFiles(Request $request, $driverId)
     {
         // получаем пользователя по id
@@ -132,6 +145,8 @@ class AdminPanelController extends Controller
                 // создаем новый объект файла
                 $file = new DriverFile();
                 $file->driver_id = $driver->id;
+                $file->data = $request->input('date');
+                // $file->data = date('d.m.Y', strtotime($request->input('date')));
                 // получаем имя и расширение файла
                 $file->filename = $uploadedFile->getClientOriginalName();
                 $file->extension = $uploadedFile->getClientOriginalExtension();
@@ -145,8 +160,33 @@ class AdminPanelController extends Controller
         // перенаправляем пользователя на страницу профиля
         return redirect()->route('showDriver', ['id' => $driver->id]);
     }
-    
 
+    // поиск по карточке файлов
+    public function searchDriverFiles($id, Request $request)
+{
+    // dd($request->all());
+    $driver = User::findOrFail($id);
+    $date = $request->input('date');
+
+    $files = DriverFile::where('driver_id', $driver->id)
+        ->when($date, function ($query, $date) {
+            return $query->where('data', $date);
+        })
+        ->get();
+
+
+    return view('admin/admindriver', compact('driver', 'files'));
+}
+    // поиск по таблице 
+
+// Для скачивания файлов
+public function downloadFile($id){
+    $file = DriverFile::findOrFail($id);
+    $pathToFile = storage_path('app/' . $file->path);
+    return response()->download($pathToFile);
+    
+    return view('admin/admindriver', compact('driver', 'files'));   
+}
 }
 
 

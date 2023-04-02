@@ -19,6 +19,13 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
+      <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn btn-dark">
+                {{ __('Log Out') }}
+            </button>
+        </form>
+
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -53,11 +60,6 @@
               <i class=" fas fa-user"></i> 
               <p class="ml-2">Drivers</p>
             </a>
-            
-            <!-- <button onclick="addLink()">Добавить</button>
-            <button id="delete-user">Удалить</button>
-            <div id="links-container"></div> -->
-
           </li>
         </ul>
       </nav>
@@ -92,6 +94,15 @@
                 @csrf
                 <button type="submit" class="btn btn-primary">Синхронизировать водителей</button>
             </form>
+            <!-- <div class="input-group input-group-sm"> -->
+            <form class="ml-5" method="GET" action="{{ route('searchUsers') }}">
+              <div class="input-group-append">
+                <input class="float-right datepicker" type="text" name="name" placeholder="Имя">
+                <input class="float-right datepicker"type="text" name="phone" placeholder="Телефон">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+            <!-- </div> -->
             </div>
             <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row"><div class="col-sm-12 col-md-6"></div><div class="col-sm-12 col-md-6"></div></div><div class="row"><div class="col-sm-12"><table id="example2" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
             <!-- выводим пользователей -->
@@ -115,6 +126,7 @@
             </tbody>
             @endforeach
             <tfoot>
+            
             </tfoot>
             </table>
         </div></div>
@@ -124,52 +136,13 @@
                 </div>
                     <div class="col-sm-12 col-md-7">
                         <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                            <!-- <ul class="pagination">
-                                <li class="paginate_button page-item previous disabled" id="example2_previous">
-                                    <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-                                </li>
-                                <li class="paginate_button page-item active">
-                                    <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-                                </li>
-                                <li class="paginate_button page-item ">
-                                    <a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0" class="page-link">2</a>
-                                </li>
-                                <li class="paginate_button page-item ">
-                                    <a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0" class="page-link">3</a>
-                                </li>
-                                <li class="paginate_button page-item ">
-                                    <a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0" class="page-link">4</a>
-                                </li>
-                                <li class="paginate_button page-item ">
-                                    <a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0" class="page-link">5</a>
-                                </li>
-                                <li class="paginate_button page-item ">
-                                    <a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0" class="page-link">6</a>
-                                </li>
-                                <li class="paginate_button page-item next" id="example2_next">
-                                    <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
-                                </li>
-                            </ul> -->
+                          {{ $users->render('admin/admin_paginate') }}
                         </div>
                     </div>
                 </div>
             </div>
             </div>
         </div>    
-        <div class="grid-btn bg-dark">
-            <div class="input-group mb-3">
-                <!-- <label for="name-filter">Name:</label> -->
-                <input type="text" class="form-control" id="name-filter" placeholder="Фильтр по имени">
-            </div>
-            <div class="input-group mb-3">
-                <!-- <label for="phone-filter">Phone:</label> -->
-                <input type="text" class="form-control" id="phone-filter" placeholder="Фильтр по телефону">
-            </div>
-            <div class="input-group mb-3">
-                <!-- <label for="date-filter">Date:</label> -->
-                <input type="text" class="form-control" id="date-filter">
-            </div>
-        </div>
     </div> 
 </div>
 <!-- /.content-wrapper -->

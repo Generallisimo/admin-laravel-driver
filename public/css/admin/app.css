@@ -23,3 +23,9 @@
     width: 15px;
     height: 20px;
 }
+.div-mrg{
+    align-self: center;
+    align-self: center;
+    justify-self: center;
+    /* margin-top: 100px; */
+}

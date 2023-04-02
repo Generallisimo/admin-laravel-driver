@@ -1,23 +1,30 @@
-<!-- @extends('admin.layouts')
-@section('title', 'driver')
+@extends('admin.layouts')
+@section('title', 'login')
 @section('content')
 
-<form method="POST" action="{{ route('login') }}">
-@csrf
-<label for="email" class="block font-medium text-sm text-gray-700">{{ __('Email') }}</label>
-<input id="email" class="block mt-1 w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username">
-@error('email')
-<span class="text-sm text-red-600">{{ $message }}</span>
-@enderror
-<label for="password">Password</label>
-<input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-@error('password')
-    <span class="text-red-600">{{ $message }}</span>
-@enderror
-<button type="submit" class="ml-3">
-    {{ __('Log in') }}
-</button>
+<div class="d-flex justify-content-center mt-auto mb-auto">
+  <div class="card" style="margin-top:250px">
+    <div class="card-body">
+    <form class="mx-auto" method="POST" action="{{ route('login') }}">
+        @csrf
+    <div class="mb-3">
+    <label for="phone" class="form-label">{{ __('Phone') }}</label>
+    <input id="phone" class="form-control" type="text" name="phone" value="{{ old('phone') }}" required autofocus autocomplete="phone">
+    @if($errors->has('phone'))
+        <p class="mt-2 text-sm text-red-600">{{ $errors->first('phone') }}</p>
+    @endif
+    </div>
 
-</form>
+    <div class="mb-3">
+    <label for="password" class="form-label">{{ __('Password') }}</label>
+    <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password">
+    </div>
+    <button type="submit" class="btn btn-primary">{{ __('Log in') }}</button>
 
-@endsection -->
+  </form>
+</div>
+</div>
+</div>
+
+
+@endsection

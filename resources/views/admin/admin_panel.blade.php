@@ -18,6 +18,14 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
+
+      <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn btn-dark">
+                {{ __('Log Out') }}
+            </button>
+        </form>
+
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -88,8 +96,8 @@
             <!-- small box -->
             <div class="small-box bg-dark">
               <div class="inner">
+                <p>Drivers</p>
                 <h3>{{$count}}</h3>
-                <p>New Driver</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>

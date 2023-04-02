@@ -19,6 +19,13 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
+      <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn btn-dark">
+                {{ __('Log Out') }}
+            </button>
+        </form>
+
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -79,39 +86,32 @@
     <!-- Main content -->
 
 
-
-    <div class="card card-dark modal-dialog">
-<div class="card-header">
-<h3 class="card-title">Card driver</h3>
-</div>
-<form action="{{ route('addUser') }}" method="post">
-    @csrf
-    <div class="card-body">
-        <div class="form-group">
-            <label>Name</label>
-            <input type="name" name="name" class="form-control" placeholder="Name">
+  <div class="container">
+    <div class="card card-dark mx-auto">
+      <!-- <div class="col-md-8 mx-auto"> -->
+        <div class="card-header">
+          <h3 class="card-title">Card driver</h3>
         </div>
-        <div class="form-group">
-            <label >Phone</label>
-            <!-- <input type="text" name="phone" class="form-control" pattern="\+7\(\d{3}\)-\d{3}-\d{2}-\d{2}" placeholder="Phone"> -->
-            <input class="form-control" type="text" name="phone"  maxlength="18" required>
-
+        <form action="{{ route('addUser') }}" method="post">
+        @csrf
+          <div class="card-body">
+            <div class="form-group">
+              <label>Name</label>
+              <input type="name" name="name" class="form-control" placeholder="Name">
+            </div>
+            <div class="form-group">
+              <label >Phone</label>
+              <!-- <input type="text" name="phone" class="form-control" pattern="\+7\(\d{3}\)-\d{3}-\d{2}-\d{2}" placeholder="Phone"> -->
+              <input class="form-control" type="text" name="phone"  maxlength="18" required>
+            </div>
+          </div>
+          <div class="card-footer">
+              <button type="submit" class="btn btn-dark">Add User</button>
+          </div>
         </div>
-        <!-- <div class="form-group">
-            <label>Password</label>
-            <input type="password" name="password" class="form-control" placeholder="Password">
-        </div> -->
-        <!-- <div class="form-group">
-            <label >Data</label>
-            <input type="text" name="data" class="form-control"  placeholder="Data">
-        </div> -->
+      </form>
     </div>
-    <div class="card-footer">
-        <button type="submit" class="btn btn-dark">Add User</button>
-    </div>
-</div>
-</form>
-</div>
+  </div>
 
     
 </div>
